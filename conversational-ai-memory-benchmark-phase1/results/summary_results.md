@@ -1,8 +1,19 @@
 # Phase 1 Results Summary
 
 **Author:** Meryem AIT MOUT  
-**Date:** March 2026 
+**Date:** March 2026  
 **Experiment:** Conversational AI Memory Benchmark – Phase 1 (seed=42)
+
+---
+
+## Abstract
+
+We evaluate six memory strategies for conversational AI across 6,000 simulated dialogues.  
+All strategies achieve similar accuracy (~80%), despite large differences in computational cost.  
+Simple recency-based memory performs comparably to embedding-based retrieval while being up to **680× faster**.  
+
+Additionally, memory performance depends more on content type than retrieval strategy, and gradually degrades to chance level in long conversations.  
+These results suggest that conversational memory remains a challenging and under-optimized component of AI systems.
 
 ---
 
@@ -30,7 +41,8 @@
 | `latest` | 80.2% | **0.00** | **1x (fastest)** |
 | `similarity` | 80.0% | 0.68 | 680x slower |
 
-**Key Insight:** All strategies perform within **0.7%** of each other. Simple latest memory is **680x faster** than similarity search with virtually identical accuracy.
+**Key Insight:** All strategies perform within **0.7%** of each other.  
+Simple `latest` memory is **~680× faster** than similarity search with virtually identical accuracy.
 
 ---
 
@@ -43,7 +55,10 @@
 | Cities | 79.5% | 1,494 | -5.3% |
 | Colors | 75.4% | 1,452 | **-9.4%** |
 
-**Key Insight:** Content matters more than strategy! There's a **9.4% gap** between pets (most memorable) and colors (least memorable). This suggests that some information is inherently easier for AI to remember.
+**Key Insight:** Content matters more than strategy.  
+There is a **9.4% gap** between pets (most memorable) and colors (least memorable).
+
+This suggests that **concrete or salient entities** (e.g., animals) may create stronger memory traces than more abstract attributes (e.g., colors).
 
 ---
 
@@ -62,9 +77,14 @@
 | 41 | 66.7% | 18 | -6.4% |
 | 46+ | **50.0%** | 24 | **-16.7%** |
 
-*\*Small sample sizes cause some variation*
+*\*Small sample sizes cause variation*
 
-**Key Insight:** Memory gradually declines to **50% accuracy** (chance level) for very long conversations (46+ turns). The pattern shows a significant drop around **26 turns** (69.2%) and another at **46+ turns** (50.0%).
+**Key Insight:** Memory gradually declines to **~50% accuracy (chance level)** for long conversations (46+ turns).
+
+The non-monotonic variations are due to limited sample sizes at certain distances.  
+However, the overall trend clearly follows a **downward decay curve**.
+
+This suggests that conversational memory behaves like a **noisy decay process** approaching random retrieval over time.
 
 ---
 
@@ -79,11 +99,17 @@
 | `hybrid_r0.5_s0.5` | 60% | 98% | 38% |
 | `hybrid_r0.3_s0.7` | 62% | 97% | 35% |
 
-**Key Insight:** This reveals a **fundamental trade-off**:
-- **Recency-based strategies** (latest + hybrids): Great at recent facts (97-99%) but poor at distant facts (60-62%)
-- **Similarity-based strategy**: Consistent across time (78-82%) with only a 4% gap
+**Key Insight:** There is a fundamental trade-off between **recency and stability**:
 
-This suggests two different memory mechanisms at work!
+- Recency-based strategies (latest + hybrids):  
+  → Excellent short-term recall (97–99%)  
+  → Poor long-term recall (60–62%)
+
+- Similarity-based strategy:  
+  → Stable performance across time (78–82%)  
+  → Minimal recency bias (only 4% gap)
+
+This suggests the existence of **two distinct memory mechanisms** in conversational systems.
 
 ---
 
@@ -98,7 +124,19 @@ This suggests two different memory mechanisms at work!
 | `hybrid_r0.9_s0.1` | 0.60 | 600x slower |
 | `similarity` | 0.68 | **680x slower** |
 
-**Key Insight:** Speed differences are enormous! Latest memory is effectively **instantaneous**, while similarity search is **680x slower** – a critical consideration for real-time applications.
+**Key Insight:** Speed differences are extreme.  
+`latest` is effectively instantaneous, while similarity-based retrieval is **orders of magnitude slower**.
+
+---
+
+## Interpretation
+
+These results suggest that:
+
+- Memory architecture may be **less important than expected**
+- Content characteristics strongly influence recall
+- Recency and similarity represent **different memory paradigms**
+- Long-term conversational memory remains an **open challenge**
 
 ---
 
@@ -107,11 +145,11 @@ This suggests two different memory mechanisms at work!
 | # | Finding | Implication |
 |---|---------|-------------|
 | 1 | **All strategies within 0.7%** | Strategy choice matters less than expected |
-| 2 | **Pets (84.8%) > Colors (75.4%)** | 9.4% gap – content drives memorability |
-| 3 | **Latest: 99% recent vs 60% distant** | Strong recency bias |
-| 4 | **Similarity: consistent 78-82%** | No recency bias – different mechanism |
-| 5 | **Memory drops to 50% at 46+ turns** | Gradual decay to chance level |
-| 6 | **Latest is 680x faster** | Huge practical advantage |
+| 2 | **Pets (84.8%) > Colors (75.4%)** | Content drives memorability |
+| 3 | **Latest: 99% vs 60%** | Strong recency bias |
+| 4 | **Similarity: stable 78–82%** | Temporal robustness |
+| 5 | **Memory → 50% at long range** | Decay to chance level |
+| 6 | **Latest is 680× faster** | Massive practical advantage |
 
 ---
 
@@ -119,18 +157,17 @@ This suggests two different memory mechanisms at work!
 
 ### Current Limitations
 - Only **one embedding model** (all-MiniLM-L6-v2)
-- Only **4 fact types** – may not generalize
-- Only **up to 50 turns** – longer conversations untested
-- **Exact match evaluation** – misses partial recall
-- **Synthetic conversations** – not real human dialogue
+- Only **4 fact types**
+- Limited to **50 turns**
+- **Exact match evaluation**
+- **Synthetic conversations**
 
 ### Planned for Phase 2
-- 5+ embedding models
-- 10+ fact types
+- Multiple embedding models
+- More fact types
 - 100+ turn conversations
-- Fuzzy evaluation (semantic similarity)
-- LLM-based evaluation
-- Real conversation logs
+- Semantic evaluation
+- Real-world data
 
 ---
 
