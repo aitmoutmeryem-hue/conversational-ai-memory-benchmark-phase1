@@ -10,8 +10,7 @@
 
 ## Key Insight
 
-Simple memory strategies perform as well as complex semantic retrieval —  
-while being up to **680× faster**.  
+Simple memory strategies perform as well as complex semantic retrieval while being up to **680× faster**.  
 
 This benchmark shows that conversational AI memory is more constrained by **time and content** than by retrieval strategy.
 
