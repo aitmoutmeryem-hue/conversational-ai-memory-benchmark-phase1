@@ -140,6 +140,29 @@ These results suggest that:
 
 ---
 
+## Critical Limitations & Interpretation
+
+While the results show minimal differences between memory strategies, several aspects of the experimental design may influence this outcome.
+
+- **Synthetic conversations:**  
+  The use of templated and low-variability dialogue likely simplifies the task and may favor recency-based strategies. Real conversations include paraphrasing, ambiguity, and noise, which could increase the importance of semantic retrieval.
+
+- **Exact match evaluation:**  
+  The strict string-matching evaluation may underestimate the performance of similarity-based approaches. Semantically correct but differently phrased answers are counted as incorrect.
+
+- **Lack of conflicting or updated facts:**  
+  The benchmark does not include scenarios where information changes over time (e.g., “I moved from Paris to Berlin”). This removes a key challenge for conversational memory systems and may reduce differences between strategies.
+
+- **Simplified query structure:**  
+  Probe questions are direct and uniform (e.g., “What is my latest pet?”), which reduces linguistic complexity and makes retrieval easier for all methods.
+
+- **External validity:**  
+  Due to these constraints, results may not fully generalize to real-world conversational AI systems.
+
+> These limitations suggest that the current results may represent a **lower-bound estimate of the importance of semantic memory**, and more realistic settings could reveal larger performance differences.
+
+---
+
 ## Key Takeaways
 
 | # | Finding | Implication |
