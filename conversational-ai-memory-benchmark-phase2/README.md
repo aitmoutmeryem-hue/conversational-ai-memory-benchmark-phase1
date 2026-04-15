@@ -3,7 +3,7 @@
 **Author:** Meryem AIT MOUT  
 **Year:** 2026
 
-## 🚀 Status
+##  Status
 
 **In progress** – results coming soon.
 
